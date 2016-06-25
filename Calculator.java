@@ -19,7 +19,7 @@ public class Calculator extends JPanel{
 	private int n;
 	private float standardDeviation;
 	private DecimalFormat dfm;
-	private int[] dataSet;
+	private float[] dataSet;
 	
 	public static void main(String args[]){
 		JFrame frame = new JFrame("Standard Deviation");
@@ -82,7 +82,7 @@ public class Calculator extends JPanel{
 			
 			if(scan.hasNext()){ //retrieve data from inputNArea to find number of terms
 				n = scan.nextInt();
-				dataSet = new int[n];
+				dataSet = new float[n];
 			} else {
 				
 			}
@@ -92,7 +92,7 @@ public class Calculator extends JPanel{
 			scan = new Scanner(text);
 			
 			while(scan.hasNext() && (count < n)){ //Retrieve data input and fill in array dataSet
-				dataSet[count] = scan.nextInt();
+				dataSet[count] = scan.nextFloat();
 				count++;
 			}
 			
