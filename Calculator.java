@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //		Created By: Jacob Cassady
 //		Date first created: 03/24/2016
-//		Date last updated: 06/24/2016
+//		Date last updated: 06/25/2016
 //		Class: CECS 220-01 (Object Oriented Program Design with Java)
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,9 +17,9 @@ public class Calculator extends JPanel{
 	private JTextArea inputTextArea, inputNArea;
 	private JButton compute;
 	private int n;
-	private float standardDeviation;
+	private double standardDeviation;
 	private DecimalFormat dfm;
-	private float[] dataSet;
+	private double[] dataSet;
 	
 	public static void main(String args[]){
 		JFrame frame = new JFrame("Standard Deviation");
@@ -82,7 +82,7 @@ public class Calculator extends JPanel{
 			
 			if(scan.hasNext()){ //retrieve data from inputNArea to find number of terms
 				n = scan.nextInt();
-				dataSet = new float[n];
+				dataSet = new double[n];
 			} else {
 				
 			}
@@ -96,7 +96,7 @@ public class Calculator extends JPanel{
 				count++;
 			}
 			
-			standardDeviation = JMath.standardDeviation(dataSet);
+			standardDeviation = JMath.populationStandardDeviation(dataSet);
 
 			standardDeviationLabel.setText("The standard deviation is: " + dfm.format(standardDeviation));
 			meanLabel.setText("The mean is: " + dfm.format(JMath.mean(dataSet)));
