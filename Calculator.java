@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //		Created By: Jacob Cassady
 //		Date first created: 03/24/2016
-//		Date last updated: 06/25/2016
+//		Date last updated: 06/26/2016
 //		Class: CECS 220-01 (Object Oriented Program Design with Java)
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -13,11 +13,11 @@ import java.text.DecimalFormat;
 
 public class Calculator extends JPanel{
 	private JPanel inputPanel, NPanel, outputPanel, buttonPanel;
-	private JLabel inputLabel,standardDeviationLabel, meanLabel;
+	private JLabel inputLabel,sSDLabel, sVLabel, pSDLabel, pVLabel, meanLabel;
 	private JTextArea inputTextArea, inputNArea;
 	private JButton compute;
 	private int n;
-	private double standardDeviation;
+	private double sVariance, sStandardDeviation, pVariance, pStandardDeviation;
 	private DecimalFormat dfm;
 	private double[] dataSet;
 	
@@ -31,8 +31,7 @@ public class Calculator extends JPanel{
 	}
 
 	public Calculator(){
-		standardDeviation = 0;
-		dfm = new DecimalFormat("0.00");
+		dfm = new DecimalFormat("0.00000000");
 		
 		inputPanel = new JPanel();
 		NPanel = new JPanel();
@@ -40,9 +39,11 @@ public class Calculator extends JPanel{
 		inputNArea = new JTextArea(1,2);
 		NPanel.add(inputLabel);
 		NPanel.add(inputNArea);
+		
 		inputTextArea = new JTextArea("Enter a set of n integers, each separated by a space and I will return the standard deviation for the data set.",3,75);
 		inputTextArea.setLineWrap(true);
 		inputTextArea.setWrapStyleWord(true);
+		
 		inputPanel.setLayout(new BorderLayout());
 		inputPanel.add(NPanel, BorderLayout.NORTH);
 		inputPanel.add(inputTextArea, BorderLayout.CENTER);
@@ -55,20 +56,27 @@ public class Calculator extends JPanel{
 		buttonPanel.add(compute,BorderLayout.CENTER);
 		buttonPanel.setPreferredSize(new Dimension(300,25));
 		
+		
 		outputPanel = new JPanel();
-		standardDeviationLabel = new JLabel("The standard deviation is: " + dfm.format(standardDeviation));
 		meanLabel = new JLabel("The mean is: " + dfm.format(0));
+		sVLabel = new JLabel("The sample variance is: " + dfm.format(sVariance));
+		sSDLabel = new JLabel("The sample standard deviation is: " + dfm.format(sStandardDeviation));
+		pVLabel = new JLabel("The population variance is: " + dfm.format(pVariance));
+		pSDLabel = new JLabel("The population standard deviation is: " + dfm.format(pStandardDeviation));
 		
-		outputPanel.add(standardDeviationLabel);
+		outputPanel.setLayout(new BoxLayout(outputPanel, BoxLayout.Y_AXIS));
 		outputPanel.add(meanLabel);
-		outputPanel.setPreferredSize(new Dimension(300,50));
-		
+		outputPanel.add(sVLabel);
+		outputPanel.add(sSDLabel);
+		outputPanel.add(pVLabel);
+		outputPanel.add(pSDLabel);
+		outputPanel.setPreferredSize(new Dimension(300,100));
 		
 		
 		add(inputPanel);
 		add(buttonPanel);
 		add(outputPanel);
-		setPreferredSize(new Dimension(310,160));
+		setPreferredSize(new Dimension(310,200));
 	}
 	
 	private class ButtonListener implements ActionListener{
@@ -83,8 +91,6 @@ public class Calculator extends JPanel{
 			if(scan.hasNext()){ //retrieve data from inputNArea to find number of terms
 				n = scan.nextInt();
 				dataSet = new double[n];
-			} else {
-				
 			}
 			scan.close();
 
@@ -95,10 +101,16 @@ public class Calculator extends JPanel{
 				dataSet[count] = scan.nextFloat();
 				count++;
 			}
-			
-			standardDeviation = JMath.populationStandardDeviation(dataSet);
 
-			standardDeviationLabel.setText("The standard deviation is: " + dfm.format(standardDeviation));
+			sVariance = JMath.sampleVariance(dataSet);
+			sStandardDeviation = JMath.sampleStandardDeviation(dataSet);
+			pVariance = JMath.populationVariance(dataSet);
+			pStandardDeviation = JMath.populationStandardDeviation(dataSet);
+			
+			sVLabel.setText("The sample variance is: " + dfm.format(sVariance));
+			sSDLabel.setText("The sample standard deviation is: " + dfm.format(sStandardDeviation));
+			pVLabel.setText("The population variance is: " + dfm.format(pVariance));
+			pSDLabel.setText("The population standard deviation is: " + dfm.format(pStandardDeviation));
 			meanLabel.setText("The mean is: " + dfm.format(JMath.mean(dataSet)));
 			
 			scan.close();
