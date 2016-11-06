@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 
-public class Calculator extends JPanel{
+public class Calculator extends JFrame{
 	private JPanel inputPanel, NPanel, outputPanel, buttonPanel;
 	private JLabel inputLabel,sSDLabel, sVLabel, pSDLabel, pVLabel, meanLabel;
 	private JTextArea inputTextArea, inputNArea;
